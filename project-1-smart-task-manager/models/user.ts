@@ -1,5 +1,4 @@
 import mongoose, { Schema, model, models } from "mongoose";
-import { timeStamp } from "node:console";
 const UserSchema = new Schema(
   {
     name: {
@@ -19,6 +18,6 @@ const UserSchema = new Schema(
       minlength: 6,
     },
   },
-  { timeStamp: true },
+  { timestamps: true },
 );
-export default model.User || model("User", UserSchema);
+export default models.User || model("User", UserSchema);
