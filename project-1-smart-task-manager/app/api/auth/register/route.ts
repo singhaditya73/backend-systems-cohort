@@ -1,11 +1,11 @@
-import { ConnectDB } from "@/lib/db";
+import { connectDB } from "@/lib/db";
 import User from "@/models/user";
 import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
 
 export async function POST(req: Request) {
   try {
-    await ConnectDB();
+    await connectDB();
     const { name, email, password } = await req.json();
 
     if (!name || !email || !password) {

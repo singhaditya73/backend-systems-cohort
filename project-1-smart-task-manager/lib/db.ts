@@ -5,7 +5,7 @@ if (!MONGODB_URL) {
   throw new Error("URL doesn't exists");
 }
 let cached = (global as any).mongoose || { conn: null, promise: null };
-export async function ConnectDB() {
+export async function connectDB() {
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
