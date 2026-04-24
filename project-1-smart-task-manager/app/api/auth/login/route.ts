@@ -1,5 +1,5 @@
 import { connectDB } from "@/lib/db";
-import User from "@/models/User";
+import User from "@/models/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -19,10 +19,7 @@ export async function POST(req: Request) {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return Response.jsoon(
-        { message: "invalid credentials" },
-        { status: 400 },
-      );
+      return Response.json({ message: "invalid credentials" }, { status: 400 });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -30,7 +27,7 @@ export async function POST(req: Request) {
       return Response.json({ message: "Invalid credentials" }, { status: 400 });
     }
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, {
-      expireIn: "7d",
+      expiresIn: "7d",
     });
     return Response.json({
       message: "Login successful",
