@@ -1,19 +1,14 @@
 import { connectDB } from "@/lib/db";
-import jwt from "jsonwebtoken";
+import { getUserIdFromRequest } from "@/lib/auth";
 import Task from "@/models/task";
 
 export async function POST(req: Request) {
   try {
     await connectDB();
-    const authHeader = req.headers.get("authorization");
-    if (!authHeader) {
+    const userId = getUserIdFromRequest(req);
+    if (!userId) {
       return Response.json({ message: "Unauthorized" }, { status: 401 });
     }
-
-    const token = authHeader.split(" ")[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
-      userId: string;
-    };
 
     const { title, description } = await req.json();
     if (!title) {
@@ -22,7 +17,7 @@ export async function POST(req: Request) {
     const task = await Task.create({
       title,
       description,
-      userId: decoded.userId,
+      userId,
     });
     return Response.json({ message: "Task created", task }, { status: 201 });
   } catch (err) {
