@@ -12,8 +12,11 @@ export async function GET(
       return Response.json({ message: "unauthorize access" }, { status: 401 });
     }
 
-    const task = await Task.findOne({ _id: params.id, userId });
+    const task = await Task.findById(params.id);
     if (!task) {
+      return Response.json({ message: "Task not found" }, { status: 404 });
+    }
+    if (task.userId.toString() !== userId) {
       return Response.json({ message: "Task not found" }, { status: 404 });
     }
 
@@ -37,11 +40,17 @@ export async function PUT(
     const body = await req.json();
     const update: Record<string, unknown> = { ...body };
 
-    const updatedTask = await Task.findOneAndUpdate(
-      { _id: params.id, userId },
-      update,
-      { new: true },
-    );
+    const task = await Task.findById(params.id);
+    if (!task) {
+      return Response.json({ message: "task not updatted" }, { status: 404 });
+    }
+    if (task.userId.toString() !== userId) {
+      return Response.json({ message: "task not updatted" }, { status: 404 });
+    }
+
+    const updatedTask = await Task.findByIdAndUpdate(params.id, update, {
+      new: true,
+    });
 
     if (!updatedTask) {
       return Response.json({ message: "task not updatted" }, { status: 404 });
@@ -67,10 +76,15 @@ export async function DELETE(
       return Response.json({ message: "unauthorize access" }, { status: 401 });
     }
 
-    const deletedTask = await Task.findOneAndDelete({
-      _id: params.id,
-      userId,
-    });
+    const task = await Task.findById(params.id);
+    if (!task) {
+      return Response.json({ message: "Task not found" }, { status: 404 });
+    }
+    if (task.userId.toString() !== userId) {
+      return Response.json({ message: "Task not found" }, { status: 404 });
+    }
+
+    const deletedTask = await Task.findByIdAndDelete(params.id);
 
     if (!deletedTask) {
       return Response.json({ message: "Task not found" }, { status: 404 });
