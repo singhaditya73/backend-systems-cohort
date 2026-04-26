@@ -1,7 +1,6 @@
 import { connectDB } from "@/lib/db";
 import Task from "@/models/task";
 import { getUserIdFromRequest } from "@/lib/auth";
-
 export async function GET(
   req: Request,
   { params }: { params: { id: string } },
@@ -37,11 +36,6 @@ export async function PUT(
 
     const body = await req.json();
     const update: Record<string, unknown> = { ...body };
-
-    if (typeof body.description !== "undefined") {
-      update.discription = body.description;
-      delete update.description;
-    }
 
     const updatedTask = await Task.findOneAndUpdate(
       { _id: params.id, userId },
