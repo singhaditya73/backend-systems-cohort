@@ -42,58 +42,74 @@ export default function RegisterPage() {
   }
 
   return (
-    <main style={{ maxWidth: 480, margin: "40px auto", padding: 16 }}>
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit} style={{ display: "grid", gap: 12 }}>
-        <label>
-          Name
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            style={{ width: "100%", padding: 8 }}
-          />
-        </label>
+    <main className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-slate-100 px-4 py-12">
+      <div className="mx-auto w-full max-w-md rounded-2xl border border-white/10 bg-white/5 p-8 shadow-xl backdrop-blur">
+        <h1 className="text-3xl font-semibold tracking-tight">Register</h1>
+        <p className="mt-2 text-sm text-slate-300">
+          Create your account to start managing tasks.
+        </p>
+        <form onSubmit={handleSubmit} className="mt-6 grid gap-4">
+          <label>
+            Name
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className="mt-1 w-full rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-slate-100 placeholder-slate-400 outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400/40"
+            />
+          </label>
 
-        <label>
-          Email
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            style={{ width: "100%", padding: 8 }}
-          />
-        </label>
+          <label>
+            Email
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="mt-1 w-full rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-slate-100 placeholder-slate-400 outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400/40"
+            />
+          </label>
 
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            minLength={6}
-            style={{ width: "100%", padding: 8 }}
-          />
-        </label>
+          <label>
+            Password
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              minLength={6}
+              className="mt-1 w-full rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-slate-100 placeholder-slate-400 outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400/40"
+            />
+          </label>
 
-        <button type="submit" disabled={submitting}>
-          {submitting ? "Creating..." : "Create account"}
-        </button>
-      </form>
+          <button
+            type="submit"
+            disabled={submitting}
+            className="mt-2 inline-flex items-center justify-center rounded-lg bg-indigo-500 px-4 py-2 font-medium text-white transition hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {submitting ? "Creating..." : "Create account"}
+          </button>
+        </form>
 
-      {error && (
-        <p style={{ color: "crimson", marginTop: 12 }}>Error: {error}</p>
-      )}
-      {message && (
-        <p style={{ color: "green", marginTop: 12 }}>{message}</p>
-      )}
+        {error && (
+          <p className="mt-4 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-200">
+            Error: {error}
+          </p>
+        )}
+        {message && (
+          <p className="mt-4 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-200">
+            {message}
+          </p>
+        )}
 
-      <p style={{ marginTop: 16 }}>
-        Already have an account? <a href="/login">Login</a>
-      </p>
+        <p className="mt-6 text-sm text-slate-300">
+          Already have an account?{" "}
+          <a className="text-indigo-300 hover:text-indigo-200" href="/login">
+            Login
+          </a>
+        </p>
+      </div>
     </main>
   );
 }

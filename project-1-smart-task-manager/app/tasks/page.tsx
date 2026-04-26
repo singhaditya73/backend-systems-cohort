@@ -175,124 +175,132 @@ export default function TasksPage() {
   }
 
   return (
-    <main style={{ maxWidth: 720, margin: "40px auto", padding: 16 }}>
-      <header style={{ display: "flex", justifyContent: "space-between" }}>
-        <h1>Tasks</h1>
-        <button onClick={handleLogout}>Logout</button>
-      </header>
+    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 px-4 py-10 text-slate-900 dark:from-slate-950 dark:to-slate-900 dark:text-slate-100">
+      <div className="mx-auto w-full max-w-3xl">
+        <header className="flex items-center justify-between rounded-xl border border-slate-200 bg-white/80 px-6 py-4 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/70">
+          <h1>Tasks</h1>
+          <button onClick={handleLogout}>Logout</button>
+        </header>
 
-      <section style={{ marginTop: 24 }}>
-        <h2>Create Task</h2>
-        <form onSubmit={handleCreate} style={{ display: "grid", gap: 12 }}>
-          <label>
-            Title
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-              style={{ width: "100%", padding: 8 }}
-            />
-          </label>
-
-          <label>
-            Description
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              style={{ width: "100%", padding: 8, minHeight: 80 }}
-            />
-          </label>
-
-          <button type="submit" disabled={loading}>
-            {loading ? "Creating..." : "Create"}
-          </button>
-        </form>
-      </section>
-
-      <section style={{ marginTop: 32 }}>
-        <h2>Manage Task by ID</h2>
-
-        <label style={{ display: "block", marginBottom: 8 }}>
-          Task ID
-          <input
-            type="text"
-            value={taskId}
-            onChange={(e) => setTaskId(e.target.value)}
-            placeholder="Paste a task _id here"
-            style={{ width: "100%", padding: 8 }}
-          />
-        </label>
-
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          <button onClick={handleFetchById} disabled={loading || !taskId}>
-            Fetch
-          </button>
-          <button onClick={handleUpdate} disabled={loading || !taskId}>
-            Update
-          </button>
-          <button onClick={handleDelete} disabled={loading || !taskId}>
-            Delete
-          </button>
-        </div>
-
-        {task && (
-          <div style={{ marginTop: 16, padding: 12, border: "1px solid #ddd" }}>
-            <h3>Current Task</h3>
-            <p>
-              <strong>ID:</strong> {task._id}
-            </p>
+        <section className="mt-8 rounded-xl border border-slate-200 bg-white/80 p-6 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/70">
+          <h2>Create Task</h2>
+          <form onSubmit={handleCreate} className="mt-4 grid gap-4">
             <label>
               Title
               <input
                 type="text"
-                value={task.title}
-                onChange={(e) =>
-                  setTask((prev) =>
-                    prev ? { ...prev, title: e.target.value } : prev,
-                  )
-                }
-                style={{ width: "100%", padding: 8 }}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+                className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-slate-700 dark:bg-slate-950"
               />
             </label>
 
-            <label style={{ display: "block", marginTop: 8 }}>
+            <label>
               Description
               <textarea
-                value={task.description || ""}
-                onChange={(e) =>
-                  setTask((prev) =>
-                    prev ? { ...prev, description: e.target.value } : prev,
-                  )
-                }
-                style={{ width: "100%", padding: 8, minHeight: 80 }}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-slate-700 dark:bg-slate-950"
               />
             </label>
 
-            <label style={{ display: "block", marginTop: 8 }}>
-              Status
-              <select
-                value={status || "todo"}
-                onChange={(e) =>
-                  setStatus(e.target.value as Task["status"])
-                }
-                style={{ width: "100%", padding: 8 }}
-              >
-                <option value="todo">todo</option>
-                <option value="in-progress">in-progress</option>
-                <option value="done">done</option>
-              </select>
-            </label>
-          </div>
-        )}
-      </section>
+            <button
+              type="submit"
+              disabled={loading}
+              className="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
+            >
+              {loading ? "Creating..." : "Create"}
+            </button>
+          </form>
+        </section>
 
-      {error && (
-        <p style={{ color: "crimson", marginTop: 16 }}>Error: {error}</p>
-      )}
-      {message && (
-        <p style={{ color: "green", marginTop: 16 }}>{message}</p>
-      )}
+        <section className="mt-10 rounded-xl border border-slate-200 bg-white/80 p-6 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/70">
+          <h2>Manage Task by ID</h2>
+
+          <label style={{ display: "block", marginBottom: 8 }}>
+            Task ID
+            <input
+              type="text"
+              value={taskId}
+              onChange={(e) => setTaskId(e.target.value)}
+              placeholder="Paste a task _id here"
+              className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-slate-700 dark:bg-slate-950"
+            />
+          </label>
+
+          <div className="mt-2 flex flex-wrap gap-3">
+            <button onClick={handleFetchById} disabled={loading || !taskId}>
+              Fetch
+            </button>
+            <button onClick={handleUpdate} disabled={loading || !taskId}>
+              Update
+            </button>
+            <button onClick={handleDelete} disabled={loading || !taskId}>
+              Delete
+            </button>
+          </div>
+
+          {task && (
+            <div className="mt-4 rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+              <h3>Current Task</h3>
+              <p>
+                <strong>ID:</strong> {task._id}
+              </p>
+              <label>
+                Title
+                <input
+                  type="text"
+                  value={task.title}
+                  onChange={(e) =>
+                    setTask((prev) =>
+                      prev ? { ...prev, title: e.target.value } : prev,
+                    )
+                  }
+                  className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-slate-700 dark:bg-slate-950"
+                />
+              </label>
+
+              <label style={{ display: "block", marginTop: 8 }}>
+                Description
+                <textarea
+                  value={task.description || ""}
+                  onChange={(e) =>
+                    setTask((prev) =>
+                      prev ? { ...prev, description: e.target.value } : prev,
+                    )
+                  }
+                  className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-slate-700 dark:bg-slate-950"
+                />
+              </label>
+
+              <label style={{ display: "block", marginTop: 8 }}>
+                Status
+                <select
+                  value={status || "todo"}
+                  onChange={(e) => setStatus(e.target.value as Task["status"])}
+                  className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-slate-700 dark:bg-slate-950"
+                >
+                  <option value="todo">todo</option>
+                  <option value="in-progress">in-progress</option>
+                  <option value="done">done</option>
+                </select>
+              </label>
+            </div>
+          )}
+        </section>
+
+        {error && (
+          <p className="mt-4 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-200">
+            Error: {error}
+          </p>
+        )}
+        {message && (
+          <p className="mt-4 rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-200">
+            {message}
+          </p>
+        )}
+      </div>
     </main>
   );
 }
